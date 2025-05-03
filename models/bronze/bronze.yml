@@ -1,0 +1,12 @@
+version: 2
+
+models:
+  - name: departments
+    description: "DBT Model for the departments table"
+
+sources:
+  - name: departments
+    database: WALMART_DB
+    schema: BRONZE
+    tables:
+      - name: DEPARTMENTS_SOURCE
