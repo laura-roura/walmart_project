@@ -9,20 +9,10 @@ SELECT
     $1 AS Store_Id,
     $2 AS Store_Type,
     $3 AS Store_Size,
-    CURRENT_TIMESTAMP() AS INSERT_DTS,
-    CURRENT_TIMESTAMP() AS UPDATE_DTS
+    CURRENT_TIMESTAMP() AS CREATED_AT
 FROM @{{ var('stage_name') }}stores.csv
 )
 FILE_FORMAT = {{var ('file_format_csv') }}
 PURGE = {{ var('purge_status') }};
-
-INSERT INTO {{var ('raw_db') }}.{{var ('wrk_schema')}}.STORES
-SELECT 
-    Store_Id,
-    Store_Type,
-    Store_Size,
-    CURRENT_TIMESTAMP() AS INSERT_DTS,
-    CURRENT_TIMESTAMP() AS UPDATE_DTS
-FROM {{var ('raw_db') }}.{{var ('wrk_schema')}}.STORES_SOURCE;
  
 {% endmacro %}

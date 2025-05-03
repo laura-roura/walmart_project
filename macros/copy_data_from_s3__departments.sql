@@ -1,5 +1,7 @@
 {% macro macros_copy_departments_csv(table_nm) %} 
 
+DELETE FROM {{var ('raw_db') }}.{{var ('wrk_schema')}}.{{ table_nm }};
+
 COPY INTO {{var ('raw_db') }}.{{var ('wrk_schema')}}.{{ table_nm }} 
 FROM 
 (

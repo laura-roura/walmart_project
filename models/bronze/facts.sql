@@ -1,27 +1,34 @@
 {{
     config
     (
-        pre_hook = macros_copy_departments_csv('DEPARTMENTS_SOURCE'),
+        pre_hook = macros_copy_facts_csv('FACTS_SOURCE'),
         materialized = 'incremental',
         incremental_strategy = 'append'
     )
 }}
 
-with department_src as 
+with fact_src as 
 (
     select
         Store_Id,
-        Dept_Id,
-        Department_Date,
-        Weekly_Sales,
+        Fact_Date,
+        Temperature,
+        Fuel_Price,
+        Markdown1,
+        Markdown2,
+        Markdown3,
+        Markdown4,
+        Markdown5,
+        CPI,
+        Unemployment,
         IsHoliday,
         CREATED_AT,
         CURRENT_TIMESTAMP() as INSERT_DTS
-    from {{ source('departments', 'DEPARTMENTS_SOURCE') }}
+    from {{ source('facts', 'FACTS_SOURCE') }}
 
     {% if is_incremental() %}
     where CREATED_AT > (SELECT MAX(INSERT_DTS) FROM {{ this }})
     {% endif %}
 )
 
-select * from department_src
+select * from fact_src

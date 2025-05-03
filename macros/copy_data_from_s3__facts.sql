@@ -18,8 +18,7 @@ SELECT
     CASE WHEN $10 = 'NA' THEN 0 ELSE $10 END AS CPI,
     CASE WHEN $11 = 'NA' THEN 0 ELSE $11 END AS Unemployment,
     $12 AS IsHoliday,
-    CURRENT_TIMESTAMP() AS INSERT_DTS,
-    CURRENT_TIMESTAMP() AS UPDATE_DTS
+    CURRENT_TIMESTAMP() AS CREATED_AT
 FROM @{{ var('stage_name') }}fact.csv
 )
 FILE_FORMAT = {{var ('file_format_csv') }}
