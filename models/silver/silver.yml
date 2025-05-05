@@ -1,0 +1,33 @@
+version: 2
+
+models:
+  - name: temp_date_dim
+    description: "DBT Model for the temporal table temp_date_dim"
+    
+  - name: walmart_date_dim
+    description: "DBT Model for the walmart_date_dim table"
+
+  - name: temp_store_dim
+    description: "DBT Model for the temporal table temp_store_dim"
+
+  - name: walmart_store_dim
+    description: "DBT Model for the walmart_store_dim table"
+
+  - name: temp_fact_table
+    description: "DBT Model for the temporal table temp_fact_table"
+
+  - name: walmart_fact_table
+    description: "DBT Model for the walmart_fact_table table"
+
+sources:
+  - name: department
+    database: WALMART_DB
+    schema: BRONZE
+    tables:
+      - name: DEPARTMENTS
+
+  - name: facts
+    database: WALMART_DB
+    schema: SILVER
+    tables:
+      - name: TEMP_FACT_TABLE

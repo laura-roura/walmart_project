@@ -1,0 +1,30 @@
+version: 2
+
+models:
+  - name: departments
+    description: "DBT Model for the departments table"
+
+  - name: stores
+    description: "DBT model for the stores table"
+
+  - name: facts
+    description: "DBT model for the facts table"
+
+sources:
+  - name: departments
+    database: WALMART_DB
+    schema: BRONZE
+    tables:
+      - name: DEPARTMENTS_SOURCE
+
+  - name: stores
+    database: WALMART_DB
+    schema: BRONZE
+    tables:
+      - name: STORES_SOURCE
+
+  - name: facts
+    database: WALMART_DB
+    schema: BRONZE
+    tables:
+      - name: FACTS_SOURCE
