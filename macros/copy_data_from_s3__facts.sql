@@ -19,8 +19,9 @@ SELECT
     CASE WHEN $11 = 'NA' THEN 0 ELSE $11 END AS Unemployment,
     $12 AS IsHoliday,
     CURRENT_TIMESTAMP() AS CREATED_AT
-FROM @{{ var('stage_name') }}fact.csv
+FROM @{{ var('stage_name') }}
 )
+PATTERN = '.*fact.*\.csv'
 FILE_FORMAT = {{var ('file_format_csv') }}
 PURGE={{ var('purge_status') }};
  

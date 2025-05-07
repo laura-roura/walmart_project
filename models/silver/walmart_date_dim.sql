@@ -8,20 +8,32 @@
     )
 }}
 
-with temp_date_dim as
+with 
+
+distinct_date_src as
 (
-    select
-        Date_Id,
-        Store_Date,
+    select 
+        DISTINCT Department_Date,
+        IsHoliday,
+        CREATED_AT       
+    from {{ ref('departments') }}
+    order by 1
+),
+
+temp_date_dim as
+(
+    select 
+        {{ dbt_utils.generate_surrogate_key(['Department_Date']) }} as Date_Id,
+        Department_Date as Store_Date,
         IsHoliday,
         CREATED_AT,
         CURRENT_TIMESTAMP as INSERT_DTS,
-        CURRENT_TIMESTAMP as UPDATE_DTS
-    from {{ ref('temp_date_dim') }}
+        CURRENT_TIMESTAMP as UPDATE_DTS         
+    from distinct_date_src
 
-     {% if is_incremental() %}
+    {% if is_incremental() %}
     where CREATED_AT > (select max(INSERT_DTS) from {{ this }} )
-    {% endif %}          
+    {% endif %}      
 )
 
 select * from temp_date_dim

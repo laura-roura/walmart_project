@@ -12,8 +12,9 @@ SELECT
     $4 AS Weekly_Sales,
     $5 AS IsHoliday,
     CURRENT_TIMESTAMP() as CREATED_AT
-FROM @{{ var('stage_name') }}department.csv
+FROM @{{ var('stage_name') }}
 )
+PATTERN = '.*department.*\.csv'
 FILE_FORMAT = {{var ('file_format_csv') }}
 PURGE={{ var('purge_status') }};
 
