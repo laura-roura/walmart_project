@@ -23,7 +23,7 @@ departments_src as
 (
     select
         DISTINCT Store_Id, Dept_Id
-    from {{ ref('departments') }}
+    from {{ source('department', 'DEPARTMENTS') }}
     order by 1,2
 ),
 
